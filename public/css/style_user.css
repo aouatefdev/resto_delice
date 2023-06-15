@@ -1,0 +1,25 @@
+
+div.text-center a{
+    padding: 3px 25px;
+    font-size: 20px;
+    }
+
+    h4{
+        width:100%;
+    }
+
+    div.full{
+        min-height:100vh;
+    }
+
+    div.bg-dark{       
+        min-height: 100vh;
+        position: fixed;
+        top: 0;
+        bottom:0;
+        left: 0;
+    }
+
+    div.divcontain{
+        padding-left:200px;
+    }

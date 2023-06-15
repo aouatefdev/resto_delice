@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Votre profile {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style_user.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style_home.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{asset('javascript/home.js')}}"></script>
+<script type="text/javascript" src="{{asset('javascript/user.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<header class="fix ps-2 pe-2">
+    <div class="d-flex justify-content-between">
+        <p class="fw-bold me-3 pt-3 text-nowrap logo fs-1"><span>R</span>est<img
+                src="{{asset('photos/logos/logo.png')}}" alt="logo"><span>D</span>élic<span>e</span>
+        </p>
+        <nav class="navbar navbar-expand-lg fw-bold">
+            <button class="navbar-toggler position-relative border-none mb-2" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}#banniere">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="{{path('app_home')}}#apropos">A propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="{{path('app_home')}}#plats">Nos Plats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="{{path('app_home')}}#desserts">Nos Desserts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}#temoignage">Témoignage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_reservation')}}">Réservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="d-flex  justify-content-end">
+            <div>
+                <h5 class="colorUser pt-3 me-3 ms-3 text-nowrap text-end">Bonjour {{app.user.firstname}}</h5>
+            </div>
+            <div class="ms-3 pt-3 me-3">
+                <a href="{{path('app_user')}}" class="text-secondary text-nowrap text-decoration-none">Mon
+                    compte</a><br>
+                <a class="text-secondary text-nowrap text-decoration-none" href="{{path('app_logout')}}">Déconnexion
+                </a>
+            </div>
+        </div>
+</header>
+
+<div class="pt-5 flex-nowrap">
+    <div class="d-flex full pt-5 flex-nowrap">
+        side Bar
+        <div class="bg-dark pt-5 ">
+            <div class="d-flex flex-column full align-items-sm-start px-3 pt-2 text-white">
+                <a href="/" class="d-flex pb-0 pt-5 mt-4 mb-md-0
+                    me-md-auto text-white text-decoration-none">
+                    <h4 class="pb-4 pt-5 d-sm-inline" style="color:#fb911f;">
+                        Mon compte
+                    </h4>
+                </a>
+                <ul class="nav flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
+                    <li class="nav-item mb-1" onclick="monProfile()">
+                        <a href="#" class="nav-link text-light px-0">
+                            <i class="fa fa-user me-1 fs-4"></i> <span class="ms-1">Mon Profile</span>
+                        </a>
+                    </li>
+                    <li class="" onclick="mesCommandes()">
+                        <a href="#" class="nav-link px-0 text-light">
+                            <i class="fa-solid fa-basket-shopping me-1 fs-4"></i>
+                            <span class="ms-1 d-none d-sm-inline">Mes Commandes</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {# contain area profile #}
+        <div class="pt-5 d-block divcontain">
+            {% if app.user %}
+
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success mb-5" id="success-message">
+                {{ message }}
+            </div>
+            {% endfor %}
+
+            <div class=" ms-4 pt-4" id="showprofil">
+                <div class="pt-2 d-flex ms-4">
+                    <h4 class="text-capitalize w-100 text-success">
+                        {{user.firstname}} {{user.lastname}}
+                    </h4>
+                </div>
+
+                <div class="mt-4 mb-4 ms-3">
+                    <div class="ms-3">
+                        <h6 class="mb-1 pt-3">Prénom</h6>
+                    </div>
+                    <div class=" text-capitalize text-secondary mb-4 ms-3">
+                        {{user.firstname}}
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="mb-1">Nom</h6>
+                    </div>
+                    <div class="text-capitalize text-secondary mb-4 ms-3">
+                        {{user.lastname}}
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="mb-1">Email</h6>
+                    </div>
+                    <div class="text-secondary mb-4 ms-3">
+                        {{user.email}}
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="mb-1">Mobile</h6>
+                    </div>
+                    <div class="text-secondary mb-4 ms-3">
+                        {{user.phone}}
+                    </div>
+
+                    <div class="ms-3">
+                        <h6 class="mb-1">Adresse</h6>
+                    </div>
+                    <div class="ms-3 text-capitalize text-secondary mb-5">
+                        {{user.address}}, {{user.zipcode}}, {{user.city}}
+                    </div>
+                    <div class="mt-4 mb-5">
+                        <a href="{{path('user_edit')}}" class="btn ms-3 pt-1 pb-1 ps-4 mb-3 pe-4 fs-6
+                        text-white bg-success">
+                            Modifier
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {# contain commande #}
+            <div class=" ms-5" style="display:block;" id="showcommandes">
+                <div class="mt-4 pt-2 ms-3">
+                    <h4 class="text-capitalize text-success">
+                        Historique des commandes ({{count}})
+                    </h4>
+                </div>
+                <div class="mt-4 pt-1 ms-3">
+
+                    {% if commandes is empty %}
+                    <p class="fs-5 ms-4">Aucune commande trouvée</p>
+                    {% else %}
+                    <div>
+                        {% for commande in commandes %}
+                        <p class="fs-6 fw-bold mt-3" style="color:#f37e00;">Commande du {{
+                            commande.createdAt|date('d/m/Y') }} - Total : {{ commande.montantTotal }} €</p>
+                        <div class="mb-4">
+                            <table>
+                                <tr>
+                                    <th class="fs-6">Produits</th>
+                                    <th class="fs-6 pe-5">Photos</th>
+                                    <th class="fs-6 pe-5">Prix unitaire</th>
+                                    <th class="fs-6 pe-5">Quantité</th>
+                                    <th class="fs-6 pe-5">Prix Total du produit</th>
+                                </tr>
+                                {% for item in commande.commandeItems %}
+                                <tr>
+                                    <td class="pe-5">{{item.plats.titre}}</td>
+                                    <td class="pb-2 pt-3"><img src="{{vich_uploader_asset(item.plats, 'imageFile')}}"
+                                            width="50" alt=""></td>
+                                    <td class="text-center pe-5">{{item.plats.prix}} €</td>
+                                    <td class="text-center pe-5">{{item.quantite}}</td>
+                                    <td class="text-center pe-5">{{ item.plats.prix * item.quantite}} €</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <hr class="dropdown-divider border-secondary">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer %} {% endblock %}

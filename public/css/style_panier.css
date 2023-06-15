@@ -1,0 +1,36 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+header{
+  position: fixed;
+  background: #fff;
+  width: 100%;
+  z-index: 3;
+}
+
+label{
+  padding-top: 0px;
+  margin-bottom:10px;
+}
+
+header .margTop div.card{
+  margin-top:500px;
+  z-index:1;
+}
+.text-start p{
+  margin-left: 10px;
+}
+
+.text-start p span{
+  width:50px;
+}
+
+   
+
+
+
+

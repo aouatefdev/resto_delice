@@ -1,0 +1,552 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style_home.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{asset('javascript/home.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+<header class="fix ps-2 pe-2">
+    {% if totalQtt == true and app.user != true %}
+    <div class="alert w-100 alert-warning alert-dismissible pt-2">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+        <div class="alert-message text-center pb-1">
+            <a class="text-secondary fw-bold text-decoration-underline fst-italic ms-2" href="{{path('app_login')}}">
+                Veuillez vous connecter pour
+                continuer</a><span class="ms-1 me-1 fw-bold text-secondary"> ou </span>
+            <a class="text-secondary fw-bold text-decoration-underline fst-italic ms-1" href="{{path('app_register')}}">
+                créer un compte</a>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="d-flex justify-content-between">
+            <p class="fw-bold me-3 pt-3 text-nowrap logo fs-1"><span>R</span>est<img
+                src="{{asset('photos/logos/logo.png')}}" alt="logo"><span>D</span>élic<span>e</span>
+            </p>
+            <nav class="navbar navbar-expand-lg fw-bold">
+                <button class="navbar-toggler position-relative border-none mb-2" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('app_home')}}#banniere">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="{{path('app_home')}}#apropos">A propos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="{{path('app_home')}}#plats">Nos Plats</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-nowrap" href="{{path('app_home')}}#desserts">Nos Desserts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('app_home')}}#temoignage">Témoignage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('app_reservation')}}">Réservation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('app_home')}}#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>        
+        <div class="fw-bold">
+            {% if app.user %}              
+            <div class="d-flex  justify-content-end">
+                <div>
+                <h5 class="colorUser pt-3 me-3 ms-3 text-nowrap text-end">Bonjour {{app.user.firstname}}</h5>
+                <ul class="connexion text-nowrap">
+                    <li class="panier position-relative nav-item"> 
+                        <i class="bi bi-cart fs-2 position-relative">
+                            <a href="{{path('panier_index')}}" class="fs-6 totalQtt text-success text-decoration-none position-absolute">
+                                {{totalQtt}}
+                            </a>
+                            {% if totalQtt is not empty %}
+                            <a href="{{path('panier_index')}}" class="panier text-nowrap">Voir panier</a>  
+                            {% endif %} 
+                        </i> 
+                    </li>
+                </ul> 
+            </div>
+                <div class="ms-3 pt-3 me-3">
+                    <a href="{{path('app_user')}}" class="text-secondary text-nowrap text-decoration-none">Mon
+                        compte</a><br>
+                    <a class="text-secondary text-nowrap text-decoration-none" href="{{path('app_logout')}}">Déconnexion</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="pt-3">
+                {% if not app.user %}
+                <ul class="connexion text-center">
+                    <li class="nav-item text-nowrap">
+                        <a class="text-secondary" href="{{path('app_register')}}">
+                            Créer un compte
+                        </a>
+                    </li>
+                    <li class="nav-item text-nowrap">
+                        <a class="text-secondary" href="{{path('app_login')}}">Connexion</a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>    
+    
+</header>
+
+<section class="banniere" id="banniere">
+
+    {% if not app.user %}
+    <div class="window open" id="myWindow">
+        <p class="welcom mt-5">
+            <strong class="ms-5 ps-5">Cher(e) Visiteur !</strong>
+        <p>
+        <p class="fictif"> Ce site est un site fictif, Si vous voulez découvrir toutes les pages du site, veuillez
+            entrer l'email et le mot de passe suivant:<br><br>
+            Email: <br><strong>demonstration@gmail.com<br></strong><br>
+            Mot de passe: <br><strong>azerty</strong>
+        </p>
+        <button type="button" class="btn-close close-button" id="toggleButton"></button>
+    </div>
+    {% endif %}
+
+    <div class="contenu text-center">
+        <h2 class="mb-5 inMobile">Que Des Plats Délicieux</h2>
+        <a href="#menu" class="btn1">Nos Menus</a>
+        <a href="{{path('app_reservation')}}" class="btn2">Reservation</a>
+    </div>
+</section>
+
+<section class="apropos" id="apropos">
+    <div class="d-flex m-auto">
+        <div class="textInside">
+            <h2 class="titreApropos text-nowrap text-start"><span>A</span> Propos De Nous</h2>
+            <p class="textAwesome">
+                Lorem ipsum dolor sit amet, ponseptetur adipisping elit, sed do
+                eiusmod tempor inpididunt
+                utlabore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exerpitation ullampo
+                laboris nisi ut aliquip ex eapommodo
+                ponsequat. Lorem ipsum dolor sit amet, ponseptetur adipisping
+                elit, sed do eiusmod
+                tempor inpididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exerpitation ullampo
+                laboris nisi ut aliquip ex ea pommodo
+                ponsequat.
+                Lorem ipsum dolor sit, amet ponseptetur adipisiping elit. Minus
+                quae illo ea molestiae
+                blanditiis eius magni, rem libero id ponsequatur quis inventore
+                Lorem, ipsum dolor sit amet
+                ponseptetur adipisiping elit. Eaque nepessitatibus amet non
+                numquam, magni quasi a quia dipta
+                expepturi quis eos dolore obpaepati labore fapilis, nemo harum
+                ab nostrum quod.
+                Lorem ipsum, dolor sit amet ponseptetur adipisiping elit,
+                Maiores, fugit vel Doloribus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem
+                ipsum dolor sit amet consectetur adipisicing elit. Alias nisi sunt quos facilis nobis
+                perferendis maxime ipsum deserunt iusto impedit. Cupiditate quod neque voluptatem nobis suscipit
+                quo sed assumenda consequatur.
+            </p>
+        </div>
+        <div>
+            <img src="{{asset('photos/logos/plat_inside.jpg')}}" class="imgInside" alt="image">
+        </div>
+    </div>
+</section>
+<h2 class="text-center text-nowrap " id="temoignage"><span>Q</span>ue <span>D</span>isent <span>N</span>os
+    <span>C</span>lients
+</h2>
+<section class=" temoignage">
+    <div class="contenu">
+        <div class="box">
+            <div class="inbox">
+                <img src="{{ asset('photos/temoinages/t1.jpeg') }}" alt="">
+            </div>
+            <div class="divTemoignage">
+                <p>Lorem ipsum dolor sit amet, ponseptetur adipisping elit, sed
+                    do eiusmod temporLorem
+                    ipsum
+                    dolor sit amet, ponseptetur adipisping elit, sed do eiusmod
+                    tempor.</p>
+                <h3>Franck leroi</h3>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{ asset('photos/temoinages/t2.jpg') }}" alt="">
+            </div>
+            <div class="divTemoignage">
+                <p>Lorem ipsum dolor sit amet, ponseptetur adipisping elit, sed
+                    do eiusmod temporLorem
+                    ipsum
+                    dolor sit amet, conseptetur adipisping elit, sed do eiusmod
+                    tempor.</p>
+                <h3>Franck leroi</h3>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{ asset('photos/temoinages/t3.jpg') }}" alt="">
+            </div>
+            <div class="divTemoignage">
+                <p>
+                    Lorem ipsum dolor sit amet, ponseptetur adipisping elit, sed
+                    do eiusmod temporLorem ipsum dolor sit amet, ponseptetur
+                    adipisping elit, sed do eiusmod tempor.
+                </p>
+                <h3>Franck leroi</h3>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{ asset('photos/temoinages/t4.jpg') }}" alt="">
+            </div>
+            <div class="divTemoignage">
+                <p>Lorem ipsum dolor sit amet, ponseptetur adipisping elit, sed
+                    do eiusmod temporLorem
+                    ipsum
+                    dolor sit amet, ponseptetur adipisping elit, sed do eiusmod
+                    tempor.</p>
+                <h3>Franck leroi</h3>
+            </div>
+        </div>
+    </div>
+</section>
+<h2 class="text-center text-nowrap">
+    <span>N</span>os <span>M</span>enus <span>P</span>lats
+</h2>
+<section class="menu" id="plats">
+    <div class="contenu">
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p1.jpg')}}#plats" alt="plat grillade">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat grillade composé de crevettes, poulets ou viande rouge selon votre
+                    choix, avec grande quantité.
+                </p>
+                <p class="prixPlats">prix: 25€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':1})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p2.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat gastronomique, composé du saumons fumés en cubes avec avocats
+                    et des morceaux de poires.
+                </p>
+                <p class="prixPlats">prix: 20€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add',{'id':2})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p3.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat végetarien composé de hamburger à base de céreales et divers légumes
+                    associés au huile d'olive.</p>
+                <p class="prixPlats">prix: 12€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add',{'id':3})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p4.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat sushi composé de crevettes, poulets, saumon, riz de qualités enrobées
+                    avec des algues, divers sauces .</p>
+                <p class="prixPlats">prix: 25€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':4})}}#plats" class="btn btn-success pt-1 pb-1"><i
+                            class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p5.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat poisson avec légumes cuites de mais, tomates, courgettes, chouxfleurs
+                    avec une sauce verte au Basilic.</p>
+                <p class="prixPlats">prix: 15€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':5})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p6.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat salade tomate, basilic et mozzarella, avec du fromage Local fait
+                    maison et tomates saisonnières de notre région.</p>
+                <p class="prixPlats">prix: 8€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':6})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p7.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat pâtes de poissons, avec du champignons farcies, tomates, fine Herbes et
+                    sauce basilic, Une de nos Spécialité maison.</p>
+                <p class="prixPlats">prix: 20€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':7})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p8.jpg')}}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat de Boeuf grillet, bon quantité avec du riz, du tomate et sauce
+                    fromagière ou sauce Basilic aux choix.</p>
+                <p class="prixPlats">prix: 18€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':8})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="inbox">
+                <img src="{{asset('photos/plats/p9.jpg') }}" alt="">
+            </div>
+            <div class="article">
+                <p class="textPlats">Plat huitres, de grande qualité, avec du citrons et du pérsil, spécialité
+                    fêtes, Très apprécié par nos clients.</p>
+                <p class="prixPlats">prix: 30€ TTC</p>
+                <p class="text-end">
+                    <a href="{{path('home_add', {'id':9})}}#plats" class="btn btn-success pt-1 pb-1">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<h2 class="text-center text-nowrap">
+    <span>N</span>os <span>M</span>enus <span>D</span>esserts
+</h2>
+<section class="menu" id="desserts">
+    <div class="contenuDess">
+        <div class="cardDess">
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img class="imgDesserts" src="{{asset('photos/desserts/d1.jpg')}}" alt="plat grillade">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Salade de fruits </h5>
+                        <p class="prixDess">prix: 6€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:10})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img class="imgDesserts" src="{{asset('photos/desserts/d2.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Créme brulée</h5>
+                        <p class="prixDess">prix: 5€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:11})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img  class="imgDesserts"  src="{{asset('photos/desserts/d3.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Créme noix coco</h5>
+                        <p class="prixDess">prix: 6€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:12})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardDess">
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img class="imgDesserts" src="{{asset('photos/desserts/d4.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Gâteau chocolat</h5>
+                        <p class="prixDess">prix: 4€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:13})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img  class="imgDesserts" src="{{asset('photos/desserts/d5.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Tarte meringue</h5>
+                        <p class="prixDess">prix: 4€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:14})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img class="imgDesserts" src="{{asset('photos/desserts/d6.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Tarte framboise</h5>
+                        <p class="prixDess">prix: 6€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:15})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardDess">
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img class="imgDesserts" src="{{asset('photos/desserts/d7.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Jus de fraise</h5>
+                        <p class="prixDess">prix: 3€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:16})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img  class="imgDesserts" src="{{asset('photos/desserts/d8.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Jus agrumes</h5>
+                        <p class="prixDess">prix: 4€ TTC</p>
+                        <p class="">
+                            <a href="{{path('home_add',{id:17})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="boxDess">
+                <div class="d-flex">
+                    <div>
+                        <img  class="imgDesserts" src="{{asset('photos/desserts/d9.jpg')}}" alt="">
+                    </div>
+                    <div class="articles">
+                        <h5 class="text-nowrap">Tarte au fruits</h5>
+                        <p class="prixDess">prix: 7€ TTC</p>
+                        <p>
+                            <a href="{{path('home_add',{id:18})}}#desserts" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<h2 class="text-center text-nowrap">
+    <span>C</span>ontact
+</h2>
+<section class="contact" id="contact">
+
+    <div class="contactform">
+        
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success mb-5" id="success-message">
+        {{ message }}
+        </div>
+        {% endfor %}
+
+           
+        <h3 style="color:#FB911F">Envoyer un message</h3>
+
+        <div class="inputboite">
+
+        {{ form(form) }} 
+        
+        </div> 
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+div.text-center a{
+    padding: 3px 25px;
+    font-size: 20px;
+    } 
+    
+    div.full{
+    min-height:100vh;
+    }
+
+    div.bg-dark{ 
+    min-height:100vh;            
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    }
+  

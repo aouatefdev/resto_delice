@@ -1,0 +1,16 @@
+.headerReserve{
+    position: fixed;
+    background: #f1e1f1;
+    width: 100%;
+    z-index: 1;
+}
+
+.copyright{
+    text-align: center;
+}
+
+.copyright p{
+    padding:30px;
+    color: rgb(47, 44, 44);
+    font-size:20px;
+}

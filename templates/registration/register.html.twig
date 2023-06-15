@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de compte{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style_home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style_login.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{asset('javascript/home.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<header class="fix ps-5 pe-5 ">
+    <div class="d-flex justify-content-between">
+        <p class="fw-bold pt-2 text-nowrap logo fs-1"><span>R</span>est<img 
+            src="{{asset('photos/logos/logo.png')}}" alt="logo"><span>D</span>élic<span>e</span>
+        </p>
+        <div class="pt-3 pe-5">
+            {% if not app.user %}
+            <ul class="connexion text-center">
+                <li class="nav-item text-nowrap">
+                    <a class="text-secondary" href="{{path('app_register')}}">
+                        Créer un compte
+                    </a>
+                </li>
+                <li class="nav-item text-nowrap">
+                    <a class="text-secondary" href="{{path('app_login')}}">Connexion</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+
+<aside>
+    <div class="window open" id="myWindow">
+        <p class="welcom mt-5">
+            <strong class="ms-4">Cher(e) Visiteur !</strong>
+        <p>
+        <p class="fictif"> Ce site est un site fictif, Si vous voulez découvrir toutes les pages du site, veuillez
+            entrer l'email et le mot de passe suivant:<br><br>
+            Email: <br><strong>demonstration@gmail.com<br></strong><br>
+            Mot de passe: <br><strong>azerty</strong>
+        </p>
+        <button type="button" class="btn-close close-button" id="toggleButton"></button>
+    </div>
+</aside>
+
+<div class="pt-5">
+    <div class="pt-3 w-50 m-auto">
+        <h2 class="mb-4 fs-3"><span>I</span>NSCRIPTION</h2>
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password.first, {'label': 'Password'}) }}
+        {{ form_row(registrationForm.password.second, {'label': 'Confirm Password'}) }}
+        {{ form_row(registrationForm.lastname) }}
+        {{ form_row(registrationForm.firstname) }}
+        {{ form_row(registrationForm.address) }}
+        {{ form_row(registrationForm.zipcode) }}
+        {{ form_row(registrationForm.city) }}
+        {{ form_row(registrationForm.phone) }}
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input border-success" id="exampleCheck1">
+            <label class="form-check-label text-info text-decoration-underline" for="exampleCheck1"><a
+                    href="#">J'accépte les règles de confidentialité</a></label>
+                   
+        </div>
+
+        {{ form_end(registrationForm) }}
+
+    </div>
+</div>
+
+
+{% block footer %} {% endblock %}
+
+{% endblock %}

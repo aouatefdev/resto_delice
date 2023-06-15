@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir Panier{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style_panier.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style_home.css') }}">
+{% endblock %}
+
+{% block body %}
+<header class="fix ps-2 pe-2">
+    <div class="d-flex justify-content-between">
+        <p class="fw-bold me-3 pt-3 text-nowrap logo fs-1"><span>R</span>est<img
+                src="{{asset('photos/logos/logo.png')}}" alt="logo"><span>D</span>élic<span>e</span>
+        </p>
+        <nav class="navbar navbar-expand-lg fw-bold">
+            <button class="navbar-toggler position-relative border-none mb-2" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}#banniere">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="{{path('app_home')}}#apropos">A propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="{{path('app_home')}}#plats">Nos Plats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="{{path('app_home')}}#desserts">Nos Desserts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}#temoignage">Témoignage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_reservation')}}">Réservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="fw-bold">
+            <div class="d-flex  justify-content-end">
+                <div>
+                    <h5 class="colorUser pt-3 me-3 ms-3 text-nowrap text-end">Bonjour {{app.user.firstname}}</h5>
+                    <ul class="connexion text-nowrap">
+                        <li class="panier position-relative nav-item">
+                            <i class="bi bi-cart fs-2 position-relative">
+                                <a href="{{path('panier_index')}}"
+                                    class="fs-6 totalQtt text-success text-decoration-none position-absolute">
+                                    {{totalQtt}}
+                                </a>
+                                {% if totalQtt is not empty %}
+                                <a href="{{path('panier_index')}}" class="panier text-nowrap">Voir panier</a>
+                                {% endif %}
+                            </i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ms-3 pt-3 me-3">
+                    <a href="{{path('app_user')}}" class="text-secondary text-nowrap text-decoration-none">Mon
+                        compte</a><br>
+                    <a class="text-secondary text-nowrap text-decoration-none"
+                        href="{{path('app_logout')}}">Déconnexion</a>
+                </div>
+            </div>
+</header>
+
+<div class="pt-5 pb-5">
+    <div class="pt-5 mt-5">
+        <div class="pt-5 mt-5">
+            <div class="card w-75 m-auto" style="background:#fff">
+                <h3 class="p-2 text-dark mb-0 text-center" style="background:#ffaa50;">Votre panier</h3>
+                <form action="{{path('app_commandes')}}">
+                    <table class="table table-striped mb-0">
+                        {% if panierData | length > 0 %}
+                        <thead>
+                            <tr style="color:#f8ffe8c7; background:#444444ed;">
+                                <th class="ps-5 pe-5">Produits</th>
+                                <th class="ps-5 pe-5">Photos</th>
+                                <th class="ps-5 pe-5">Prix</th>
+                                <th class="ps-5 pe-5">Quantité</th>
+                                <th class="ps-5 pe-5">Prix Total</th>
+                                <th colspan="3" class="text-center ps-5 pe-5">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for element in panierData %}
+                            <tr>
+                                <td class="ps-5 pe-5">{{element.plats.titre}}</td>
+                                <td class="text-center"><img src="{{vich_uploader_asset(element.plats, 'imageFile')}}"
+                                        width="50" alt=""></td>
+                                <td class="text-center">{{element.plats.prix}} €</td>
+                                <td class="text-center">{{element.quantity}}</td>
+                                <td class="text-center">{{ element.plats.prix * element.quantity}} €</td>
+
+                                <td colspan="3" class="text-end">
+                                    <a href="{{path('panier_add',{'id':element.plats.id})}}"
+                                        class="btn btn-success me-3 btn-sm">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </a>
+
+                                    <a href="{{path('panier_remove',{'id':element.plats.id})}}"
+                                        class="btn btn-danger me-3 ms-3 btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="ps-5" style="color:#ff8400">Total</th>
+                                <td class="text-center ps-5 pe-5">{{totalQtt}}</td>
+                                <td colspan="" class="text-center">{{montantTotal}} €</td>
+                                <td class="text-end">
+                                    <a href="{{path('remove_all')}}" class="btn btn-danger me-3 btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <button type="submit" class="btn btn-success p-2 ps-5 pe-5 fw-bold w-100">
+                        <a href="{{path('valide_commandes')}}" class="text-light"> Valider votre Commande</a>
+                    </button>
+                    {% else %}
+                    <p class="text-center ms-4 mb-5 mt-5 text-black fs-5">Votre panier est vide!</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block footer %} {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,19 @@
+.login{
+    width:50%;
+    margin:auto;
+    text-align: center;
+}
+
+span{
+    color: #fb911f;
+    font-weight: 700px;
+}
+
+input{
+    border:none;
+}
+
+label{
+
+    font-size: 1.1em;
+}

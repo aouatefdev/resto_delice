@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style_home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style_login.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{asset('javascript/home.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<header class="fix ps-5 pe-5 ">
+    <div class="d-flex justify-content-between">
+        <p class="fw-bold pt-2 text-nowrap logo fs-1"><span>R</span>est<img
+                src="{{asset('photos/logos/logo.png')}}" alt="logo"><span>D</span>élic<span>e</span>
+        </p>
+        <div class="pt-3 pe-5">
+            {% if not app.user %}
+            <ul class="connexion text-center">
+                <li class="nav-item text-nowrap">
+                    <a class="text-secondary" href="{{path('app_register')}}">
+                        Créer un compte
+                    </a>
+                </li>
+                <li class="nav-item text-nowrap">
+                    <a class="text-secondary" href="{{path('app_login')}}">Connexion</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<aside>
+    <div class="window open" id="myWindow">
+        <p class="welcom mt-5">
+            <strong class="ms-5 ps-5">Cher(e) Visiteur !</strong>
+        <p>
+        <p class="fictif"> Ce site est un site fictif, Si vous voulez découvrir toutes les pages du site, veuillez
+            entrer l'email et le mot de passe suivant:<br><br>
+            Email: <br><strong>demonstration@gmail.com<br></strong><br>
+            Mot de passe: <br><strong>azerty</strong>
+        </p>
+        <button type="button" class="btn-close close-button" id="toggleButton"></button>
+    </div>
+</aside>
+
+
+<div class="pt-5">
+    <div class="pt-3">
+        <h2 class="mb-4 text-center fs-3"><span>C</span>onnexion</h2>
+        <form method="post" class="login text-start">           
+            <label for="inputEmail" class="text-start">Email</label>
+            <input type="email" class="mb-4 p-1" value="{{ last_username }}" name="email" id="inputEmail"
+                class="form-control" autocomplete="email" required autofocus>
+            <label for="inputPassword" class="text-start">Mot de passe</label>
+            <input type="password" class="mb-3 p-1" name="password" id="inputPassword" class="form-control"
+                autocomplete="current-password" required>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button class="size btn btn-lg btn-primary p-1 mt-5 mb-5 w-100" type="submit">
+                Valider
+            </button>
+        </form>
+    </div>
+</div>
+
+{% block footer %}{% endblock %}
+
+{% endblock %}
